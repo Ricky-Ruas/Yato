@@ -24,7 +24,7 @@ import scipy as sp
 import statistics as stts
 import matplotlib
 
-file = pd.DataFrame(pd.read_excel(io='big_data.xlsx', header=[0], usecols=[0, 1])).fillna(0) 
+file = pd.DataFrame(pd.read_excel(io='part_5(2).xlsx', header=[0], usecols=[0, 1])).fillna(0) 
 sequence_of_values_of_a_signal = file.col2                                                   #      Исходные данные
 abscissa_axis = list(range(0, len(sequence_of_values_of_a_signal)))                          #      Отсчеты(индексы для перебора)
 
@@ -82,7 +82,16 @@ def period(data1):                               #### Находится вел�
 def stats(data):                                 #### Находятся статистические параметры
     SKO = np.std(data)
     meanValue = stts.mean(data)
-    modaValue = stts.mode(data)
+    list_table = stts._counts(data)
+    len_table = len(list_table)
+    if len_table == 1:
+        modaValue = stts.mode(data)
+    else: 
+        new_list = []
+        for i in range(len_table):
+            new_list.append(list_table[i][0])
+        modaValue = max(new_list) # use the max value here
+    
     l = [SKO, meanValue, modaValue]
     return l
 
